@@ -21,10 +21,54 @@ class Player {
     }
 }
 
+class Projectile {
+    constructor(x, y, radius, color, speed) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.speed = speed;
+    }
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+    }
+    update() {
+        this.x += this.speed.x;
+        this.y += this.speed.y;
+    }
+}
+
+
+
+
+
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
 const player = new Player(x, y, 30, 'blue');
 player.draw();
+const projectile = new Projectile(
+    canvas.width / 2,
+    canvas.height / 2,
+    5,
+    'red', {
+        x: 1,
+        y: 1
+    }
+);
 
-console.log(player);
+function animate() {
+    requestAnimationFrame(animate);
+    projectile.draw();
+    projectile.update();
+
+}
+
+window.addEventListener('click', (event) => {
+
+});
+
+animate();
