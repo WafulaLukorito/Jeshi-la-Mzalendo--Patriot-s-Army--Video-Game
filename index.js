@@ -45,6 +45,26 @@ class Projectile {
 }
 
 
+class Enemy {
+    constructor(x, y, radius, color, speed) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.speed = speed;
+    }
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+    }
+    update() {
+        this.draw();
+        this.x += this.speed.x;
+        this.y += this.speed.y;
+    }
+}
 
 
 
@@ -80,6 +100,39 @@ const projectile2 = new Projectile(
 
 const projectiles = [];
 
+const enemies = [];
+
+function spawnEnemy() {
+    setInterval(() => {
+        const radius = Math.random() * (30 - 10) + 10;
+
+        let x;
+        let y;
+
+        if (Math.random() > 0.5) {
+            x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
+            y = Math.random() * canvas.height;
+        } else {
+            x = Math.random() * canvas.width;
+            y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
+        }
+
+        const color = 'green';
+
+        const angle = Math.atan2(
+            canvas.height / 2 - y,
+            canvas.width / 2 - x);
+
+        const speed = {
+            x: Math.cos(angle),
+            y: Math.sin(angle)
+
+        };
+
+        enemies.push(new Enemy(x, y, radius, color, speed));
+    }, 1000);
+}
+
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,12 +141,15 @@ function animate() {
         projectile.update();
 
     });
+    enemies.forEach((enemy) => {
+        enemy.update();
+    });
 }
 
 window.addEventListener('click', (event) => {
     const angle = Math.atan2(event.clientY - canvas.height / 2, event.clientX - canvas.width / 2);
 
-    const velocity = {
+    const speed = {
         x: Math.cos(angle),
         y: Math.sin(angle)
 
@@ -104,8 +160,9 @@ window.addEventListener('click', (event) => {
             canvas.width / 2,
             canvas.height / 2,
             5,
-            'red', velocity)
+            'red', speed)
     );
 });
 
 animate();
+spawnEnemy();
