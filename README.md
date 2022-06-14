@@ -1,2 +1,3 @@
 -Used Canvas API
 -Applied Trigonometry to caculate and obtain projectile velocities.
+-Concepts in Computer graphics
