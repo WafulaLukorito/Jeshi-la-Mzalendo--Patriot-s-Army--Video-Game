@@ -142,15 +142,21 @@ function animate() {
     projectiles.forEach((projectile) => {
         projectile.update();
 
+        //remove projectile if it goes out of bounds
+        if (projectile.x + projectile.radius < 0 || projectile.x - projectile.radius > canvas.width || projectile.y + projectile.radius < 0 || projectile.y - projectile.radius > canvas.height) {
+            setTimeout(() => {
+                projectiles.splice(index, 1);
+            }, 0);
+        }
+
     });
     enemies.forEach((enemy, index) => {
         enemy.update();
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
 
-        if (dist - enemy.radius - player.radius < 1) {
+        if (dist - enemy.radius - player.radius < -2) {
             cancelAnimationFrame(animationID);
-
-
+            alert('Game Over');
         }
 
         projectiles.forEach((projectile, projectileIndex) => {
