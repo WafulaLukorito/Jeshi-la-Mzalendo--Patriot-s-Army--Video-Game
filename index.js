@@ -39,8 +39,8 @@ class Projectile {
     }
     update() {
         this.draw();
-        this.x += this.speed.x * 4;
-        this.y += this.speed.y * 4;
+        this.x += this.speed.x;
+        this.y += this.speed.y;
     }
 }
 
@@ -71,7 +71,7 @@ class Enemy {
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
-const player = new Player(x, y, 30, 'blue');
+const player = new Player(x, y, 10, 'white');
 
 
 
@@ -82,7 +82,7 @@ const projectile = new Projectile(
     canvas.width / 2,
     canvas.height / 2,
     5,
-    'red', {
+    'white', {
         x: 1,
         y: 1
     }
@@ -117,7 +117,7 @@ function spawnEnemy() {
             y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
         }
 
-        const color = 'green';
+        const color = `hsla(${Math.random() * 360}, 50%, 50%, 1)`;
 
         const angle = Math.atan2(
             canvas.height / 2 - y,
@@ -136,8 +136,12 @@ function spawnEnemy() {
 let animationID;
 
 function animate() {
+    const img = new Image();
+    img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/1024px-Flag_of_Kenya.svg.png';
     animationID = requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    //c.drawImage(img, 0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    c.fillRect(0, 0, canvas.width, canvas.height);
     player.draw();
     projectiles.forEach((projectile) => {
         projectile.update();
@@ -156,7 +160,6 @@ function animate() {
 
         if (dist - enemy.radius - player.radius < -2) {
             cancelAnimationFrame(animationID);
-            alert('Game Over');
         }
 
         projectiles.forEach((projectile, projectileIndex) => {
@@ -177,8 +180,8 @@ window.addEventListener('click', (event) => {
     const angle = Math.atan2(event.clientY - canvas.height / 2, event.clientX - canvas.width / 2);
 
     const speed = {
-        x: Math.cos(angle),
-        y: Math.sin(angle)
+        x: Math.cos(angle) * 5,
+        y: Math.sin(angle) * 5
 
     };
 
@@ -187,7 +190,7 @@ window.addEventListener('click', (event) => {
             canvas.width / 2,
             canvas.height / 2,
             5,
-            'red', speed)
+            'white', speed)
     );
 });
 
