@@ -6,7 +6,7 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 const scoreEl = document.querySelector('#scoreEl');
-console.log(scoreEl);
+const modalEl = document.querySelector('#modalEl');
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -276,5 +276,8 @@ window.addEventListener('click', (event) => {
     );
 });
 
-animate();
-spawnEnemy();
+startGameButton.addEventListener('click', () => {
+    animate();
+    spawnEnemy();
+    modalEl.style.display = 'none';
+});
