@@ -1,11 +1,12 @@
 /*jshint esversion: 6 */
 
-console.log(gsap);
 
 const canvas = document.querySelector('canvas');
 
 const c = canvas.getContext('2d');
 
+const scoreEl = document.querySelector('#scoreEl');
+console.log(scoreEl);
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -160,10 +161,11 @@ function spawnEnemy() {
         };
 
         enemies.push(new Enemy(x, y, radius, color, speed));
-    }, 1000);
+    }, 3000);
 }
 
 let animationID;
+let score = 0;
 
 function animate() {
     const img = new Image();
@@ -182,8 +184,8 @@ function animate() {
         }
     });
 
-
-    projectiles.forEach((projectile) => {
+    //might edit this
+    projectiles.forEach((projectile, index) => {
         projectile.update();
 
         //remove projectile if it goes out of bounds
@@ -209,6 +211,7 @@ function animate() {
             if (dist - enemy.radius - projectile.radius < 1) {
 
 
+
                 //Create explosion particles
                 for (let i = 0; i < enemy.radius * 2; i++) {
                     particles.push(
@@ -224,6 +227,13 @@ function animate() {
 
 
                 if (enemy.radius - 10 > 5) {
+
+                    //Increase score
+                    score += 50;
+                    scoreEl.innerHTML = score;
+                    console.log(score);
+
+
                     gsap.to(enemy, {
                         radius: enemy.radius - 10
                     });
@@ -232,6 +242,10 @@ function animate() {
                     }, 0);
 
                 } else {
+                    //remove enemy from scene altogether
+                    score += 125;
+
+
                     setTimeout(() => {
                         enemies.splice(index, 1);
                         projectiles.splice(projectileIndex, 1);
