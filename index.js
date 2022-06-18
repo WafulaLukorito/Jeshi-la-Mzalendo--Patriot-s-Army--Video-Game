@@ -209,7 +209,7 @@ function spawnEnemy() {
 
         enemies.push(new Enemy(x, y, radius, color, speed));
         badVices.push(new Vices(x, y, color, speed));
-    }, 3000);
+    }, 2000);
 }
 
 let animationID;
