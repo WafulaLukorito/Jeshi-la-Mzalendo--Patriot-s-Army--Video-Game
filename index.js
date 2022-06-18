@@ -13,7 +13,7 @@ let viceList = ["Ufisadi", "Ubinafsi", "Ukabila", "Ulanguzi", "Magendo", "Uzembe
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 const img = new Image();
-img.src = 'Kenya-flag.jpg';
+img.src = "Assets/Kenya-flag.jpg";
 c.drawImage(img, 0, 0, canvas.width, canvas.height);
 
 class Player {
@@ -221,7 +221,7 @@ function animate() {
     c.fillStyle = 'rgba(0, 0, 0, 0.3)';
     c.fillRect(0, 0, canvas.width, canvas.height);
     const img = new Image();
-    img.src = "linda-nchi.png";
+    img.src = "Assets/linda-nchi.png";
     c.drawImage(img,
         canvas.width / 2 - img.width / 2,
         canvas.height / 2 - img.height / 2
