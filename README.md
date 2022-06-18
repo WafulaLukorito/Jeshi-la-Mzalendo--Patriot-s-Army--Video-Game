@@ -17,7 +17,7 @@ Jeshi la Mzalendo is a single-player game that is played in a 2D environment.
 
 ## Video Game Screenshots
 
-![End Game UI](screenshots\jeshi-screesnshot1.png "End game UI")
+![End Game UI](https://github.com/WafulaLukorito/Jeshi-la-Mzalendo--Patriot-s-Army--Game/blob/master/screenshots/jeshi-screesnshot1.png "End game UI")
 End game UI
 
 ![Game mode UI](screenshots\jeshi-screesnshot2.png "Game mode UI")
