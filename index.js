@@ -8,9 +8,13 @@ const c = canvas.getContext('2d');
 const scoreEl = document.querySelector('#scoreEl');
 const modalEl = document.querySelector('#modalEl');
 const bigScoreEl = document.querySelector('#bigScoreEl');
+let viceList = ["Ufisadi", "Ubinafsi", "Ukabila", "Ulanguzi", "Magendo", "Uzembe", "Uganda", "Ujinga", "Propaganda", "Siasa chafu", "Mabadiliko ya tabianchi", "Gesi joto", "Ubaguzi", "Kisukuku", "Polio", "Vita", "Kiburi", "Ukiritimba", "Ubaguzi wa rangi", "Dhulma", "Kutesa Wanyama", "Usherati", "Hujuma", "Ulafi", "Uhaini"];
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
+const img = new Image();
+img.src = 'Kenya-flag.jpg';
+c.drawImage(img, 0, 0, canvas.width, canvas.height);
 
 class Player {
     constructor(x, y, radius, color) {
@@ -49,6 +53,11 @@ class Projectile {
 }
 
 
+const mtext = c.fillText('Hello world', 10, 50);
+
+
+
+
 class Enemy {
     constructor(x, y, radius, color, speed) {
         this.x = x;
@@ -56,17 +65,27 @@ class Enemy {
         this.radius = radius;
         this.color = color;
         this.speed = speed;
+        this.vice = viceList[Math.floor(Math.random() * viceList.length)];
     }
     draw() {
         c.beginPath();
+        c.font = "20px sans-serif";
+        c.fillText(`    <= ${this.vice}`, this.x, this.y);
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+
         c.fillStyle = this.color;
         c.fill();
+
+
+
+        //c.fillText("gggg", white);
+        //c.strokeText("Ufisadi");
     }
     update() {
         this.draw();
         this.x += this.speed.x;
         this.y += this.speed.y;
+
     }
 }
 
@@ -97,43 +116,49 @@ class Particle {
     }
 }
 
+class Vices {
+    constructor(x, y, colour, speed) {
+        this.x = x;
+        this.y = y;
+        this.color = colour;
+        this.speed = speed;
+
+    }
+    draw() {
+        //var ctx = canvas.getContext('2d');
+        c.beginPath();
+        c.fillText('Ufisadi', this.x, this.y);
+        c.font = "20px Arial";
+        // c.moveTo(this.x, this.y);
+        // c.lineTo(this.x, this.y);
+        c.fillStyle = this.color;
+
+        c.fill();
+
+    }
+    update() {
+        this.draw();
+        this.x += this.speed.x;
+        this.y += this.speed.y;
+    }
+}
+
+
+
 
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
-
-
-
-
-
-
-const projectile = new Projectile(
-    canvas.width / 2,
-    canvas.height / 2,
-    5,
-    'white', {
-        x: 1,
-        y: 1
-    }
-);
-
-const projectile2 = new Projectile(
-    canvas.width / 2,
-    canvas.height / 2,
-    5,
-    'green', {
-        x: -1,
-        y: -1
-    }
-);
-
-let player = new Player(x, y, 10, 'white');
 
 let projectiles = [];
 
 let enemies = [];
 
 let particles = [];
+
+let badVices = [];
+
+
 
 function init() {
     player = new Player(x, y, 10, 'white');
@@ -143,6 +168,10 @@ function init() {
     enemies = [];
 
     particles = [];
+
+    badVices = [];
+
+
 
     score = 0;
 
@@ -179,19 +208,24 @@ function spawnEnemy() {
         };
 
         enemies.push(new Enemy(x, y, radius, color, speed));
+        badVices.push(new Vices(x, y, color, speed));
     }, 3000);
 }
 
 let animationID;
 let score = 0;
 
+
 function animate() {
-    const img = new Image();
-    img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/1024px-Flag_of_Kenya.svg.png';
     animationID = requestAnimationFrame(animate);
-    //c.drawImage(img, 0, 0, canvas.width, canvas.height);
-    c.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    c.fillStyle = 'rgba(0, 0, 0, 0.3)';
     c.fillRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.src = "linda-nchi.png";
+    c.drawImage(img,
+        canvas.width / 2 - img.width / 2,
+        canvas.height / 2 - img.height / 2
+    );
     player.draw();
 
     particles.forEach((particle, index) => {
@@ -216,6 +250,7 @@ function animate() {
     });
     enemies.forEach((enemy, index) => {
         enemy.update();
+        //vice.update();
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
 
         //end game if player is hit
@@ -225,8 +260,10 @@ function animate() {
             bigScoreEl.innerHTML = score;
         }
 
+
         projectiles.forEach((projectile, projectileIndex) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
+
 
             //When projectiles collide with enemies
             if (dist - enemy.radius - projectile.radius < 1) {
@@ -252,7 +289,7 @@ function animate() {
                     //Increase score
                     score += 50;
                     scoreEl.innerHTML = score;
-                    console.log(score);
+
 
 
                     gsap.to(enemy, {
@@ -297,9 +334,13 @@ window.addEventListener('click', (event) => {
     );
 });
 
+let vice = new Vices(100, 200, 'green', { x: 1, y: 1 });
+
 startGameButton.addEventListener('click', () => {
     init();
     animate();
     spawnEnemy();
+    vice.update();
+
     modalEl.style.display = 'none';
 });
