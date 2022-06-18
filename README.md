@@ -20,10 +20,10 @@ Jeshi la Mzalendo is a single-player game that is played in a 2D environment.
 ![End Game UI](https://github.com/WafulaLukorito/Jeshi-la-Mzalendo--Patriot-s-Army--Game/blob/master/screenshots/jeshi-screesnshot1.png "End game UI")
 End game UI
 
-![Game mode UI](screenshots\jeshi-screesnshot2.png "Game mode UI")
+![Game mode UI](https://github.com/WafulaLukorito/Jeshi-la-Mzalendo--Patriot-s-Army--Game/blob/master/screenshots/jeshi-screesnshot2.png "Game mode UI")
 Game mode UI
 
-![Game mode UI](screenshots\jeshi-screesnshot3.png "Game mode UI")
+![Game mode UI](https://github.com/WafulaLukorito/Jeshi-la-Mzalendo--Patriot-s-Army--Game/blob/master/screenshots/jeshi-screesnshot3.png "Game mode UI")
 Game mode UI
 
 For comments and suggestions on how to improve the game, kindly email me at <hello@lukorito.dev>.
